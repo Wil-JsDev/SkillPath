@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# TypeScript incremental compilation
+*.tsbuildinfo
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Jest cache
+.jest-cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# pnpm
+.pnpm-debug.log
+
+# Migrations (keep the folder, ignore generated files if needed)
+# migrations/*.js
