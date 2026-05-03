@@ -23,9 +23,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/api/test/jest-e2e.json",
-    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run -d libs/core/src/database/typeorm.config.ts",
-    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:generate migrations/Migration -d libs/core/src/database/typeorm.config.ts",
-    "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:revert -d libs/core/src/database/typeorm.config.ts"
+    "migration:run": "TS_NODE_PROJECT=tsconfig.migrations.json ./node_modules/.bin/typeorm-ts-node-commonjs migration:run -d libs/core/src/database/typeorm.config.ts",
+    "migration:generate": "TS_NODE_PROJECT=tsconfig.migrations.json ./node_modules/.bin/typeorm-ts-node-commonjs migration:generate libs/core/src/database/migrations/Migration -d libs/core/src/database/typeorm.config.ts",
+    "migration:revert": "TS_NODE_PROJECT=tsconfig.migrations.json ./node_modules/.bin/typeorm-ts-node-commonjs migration:revert -d libs/core/src/database/typeorm.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
@@ -39,6 +39,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
     "bullmq": "^5.0.0",
+    "dotenv": "^17.4.2",
     "ioredis": "^5.3.2",
     "openai": "^6.35.0",
     "pg": "^8.13.0",
