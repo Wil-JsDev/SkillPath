@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { envSchema } from '@skillpath/core/config/env.schema';
+import { envSchema } from './config/env.schema';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -8,6 +9,8 @@ import { envSchema } from '@skillpath/core/config/env.schema';
       isGlobal: true,
       validate: (config) => envSchema.parse(config),
     }),
+    DatabaseModule,
   ],
+  exports: [DatabaseModule],
 })
 export class CoreModule {}
