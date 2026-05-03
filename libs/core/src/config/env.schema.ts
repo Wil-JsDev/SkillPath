@@ -18,6 +18,12 @@ export const envSchema = z.object({
   STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
   STRIPE_WEBHOOK_SECRET: z.string().startsWith('whsec_'),
   PORT: z.coerce.number().default(3000),
+  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+  OTEL_EXPORTER_OTLP_ENDPOINT: z
+    .string()
+    .url()
+    .default('http://localhost:4318'),
+  GRAFANA_LOKI_URL: z.string().url().default('http://localhost:3100'),
 });
 
 export type AppConfig = z.infer<typeof envSchema>;
