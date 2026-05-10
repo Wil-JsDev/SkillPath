@@ -44,19 +44,6 @@ services:
     command: -config.file=/config/loki.yaml
     restart: unless-stopped
 
-  # ─── Tempo — trazas distribuidas (OTLP) ─────────────────────────────────────
-  tempo:
-    image: grafana/tempo:2.3.0
-    ports:
-      - '3200:3200'   # HTTP query (Grafana data source)
-      - '4317:4317'   # OTLP gRPC
-      - '4318:4318'   # OTLP HTTP
-    volumes:
-      - ./infra:/config
-      - tempo_data:/var/tempo
-    command: -config.file=/config/tempo.yaml
-    restart: unless-stopped
-
   # ─── Prometheus — métricas ───────────────────────────────────────────────────
   prometheus:
     image: prom/prometheus:v2.48.0
@@ -73,20 +60,19 @@ services:
   grafana:
     image: grafana/grafana:10.2.0
     ports:
-      - '3001:3000'
+      - '3300:3000'
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
       GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
     volumes:
       - ./infra/grafana/provisioning:/etc/grafana/provisioning
       - grafana_data:/var/lib/grafana
-    depends_on: [loki, tempo, prometheus]
+    depends_on: [loki, prometheus]
     restart: unless-stopped
 
 volumes:
   postgres_data:
   redis_data:
   loki_data:
-  tempo_data:
   prometheus_data:
   grafana_data:
