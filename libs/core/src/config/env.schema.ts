@@ -18,7 +18,8 @@ export const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string(),
   STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
   STRIPE_WEBHOOK_SECRET: z.string().startsWith('whsec_'),
-  PORT: z.coerce.number().default(3000),
+  PORT_API: z.coerce.number().default(3000),
+  PORT_WORKER: z.coerce.number().default(3001),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
   GRAFANA_LOKI_URL: z.string().url().default('http://localhost:3100'),
 });
