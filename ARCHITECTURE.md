@@ -1,7 +1,7 @@
 ```
-skillpath-api/                          ← repositorio backend (independiente del frontend)
+skillpath-api/
 ├── apps/
-│   ├── skillpath-api/                  ← proceso HTTP (NestJS REST API)
+│   ├── api/                            ← proceso HTTP (NestJS REST API)
 │   │   ├── src/
 │   │   │   ├── modules/
 │   │   │   │   ├── auth/               ← JWT, refresh tokens, JwtAuthGuard
@@ -22,7 +22,7 @@ skillpath-api/                          ← repositorio backend (independiente d
 │       │   │   ├── course.processor.ts     ← generación de módulos y quizzes con OpenAI
 │       │   │   └── email.processor.ts      ← notificaciones (curso listo, invitaciones)
 │       │   ├── worker.module.ts
-│       │   └── main.ts                     ← NestJS standalone app (sin HTTP)
+│       │   └── main.ts                     ← NestJS standalone app sin HTTP
 │       └── tsconfig.app.json
 │
 ├── libs/
@@ -35,19 +35,22 @@ skillpath-api/                          ← repositorio backend (independiente d
 │   │
 │   └── core/                           ← infraestructura técnica reutilizable
 │       └── src/
+│           ├── config/                 ← ConfigModule con validación Zod (SERVICE_NAME, LOG_LEVEL, etc.)
 │           ├── database/               ← TypeORM config, DataSource, BaseRepository
-│           ├── redis/                  ← RedisModule compartido (BullMQ + cache)
-│           ├── config/                 ← ConfigModule con validación Zod de env vars
+│           ├── observability/          ← Pino + Loki + Prometheus
 │           └── interceptors/           ← TenantInterceptor, LoggingInterceptor
 │
-├── migrations/                         ← migraciones TypeORM (proceso independiente)
+├── infra/
+│   ├── loki.yaml                       ← Loki config (local)
+│   ├── prometheus.yml                  ← scrape jobs para api:3000 y worker:3001
+│   └── grafana/provisioning/           ← datasources (Loki, Prometheus) y dashboards
 │
 ├── Dockerfile.api                      ← imagen del proceso API
 ├── Dockerfile.worker                   ← imagen del proceso worker
-├── docker-compose.yml                  ← stack local completo
-├── docker-compose.prod.yml
+├── docker-compose.yml                  ← stack local: postgres, redis, loki, prometheus, grafana
+├── .dockerignore
 ├── pnpm-workspace.yaml                 ← configuración de workspaces pnpm
 ├── nest-cli.json
-├── package.json                        ← dependencias raíz del workspace
-└── tsconfig.json
+├── package.json
+├── pnpm-lock.yaml
 ```
