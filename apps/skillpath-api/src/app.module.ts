@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { CoreModule } from '@skillpath/core';
 
 @Module({
-  imports: [],
+  imports: [CoreModule],
 })
 export class AppModule {}
